@@ -1,6 +1,7 @@
 package com.trabalhoFinal.controllers;
 
 import com.trabalhoFinal.domain.Livro;
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
 import com.trabalhoFinal.services.LivroServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,11 @@ public class LivroController {
     @GetMapping
     public ResponseEntity<List<Livro>> getAllLivros() {
         List<Livro> livros = livroService.getAllLivros();
-        return new ResponseEntity<>(livros, HttpStatus.OK);
+        if (!livros.isEmpty()) {
+            return new ResponseEntity<>(livros, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Endpoint para obter um livro por ID
@@ -54,8 +59,7 @@ public class LivroController {
 
     // Endpoint para excluir um livro
     @DeleteMapping("/{livroId}")
-    public ResponseEntity<Void> deleteLivro(@PathVariable Long livroId) {
-        livroService.deleteLivro(livroId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<DeleteMessageDTO> deleteLivro(@PathVariable Long livroId) {
+        return livroService.deleteLivro(livroId);
     }
 }

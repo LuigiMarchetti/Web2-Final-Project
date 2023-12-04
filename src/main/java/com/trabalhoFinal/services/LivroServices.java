@@ -1,6 +1,10 @@
 package com.trabalhoFinal.services;
 
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
+import com.trabalhoFinal.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.trabalhoFinal.domain.Livro;
@@ -54,7 +58,13 @@ public class LivroServices {
     }
 
     // Excluir um livro
-    public void deleteLivro(Long livroId) {
-        livroRepository.deleteById(livroId);
+    public ResponseEntity<DeleteMessageDTO> deleteLivro(Long livroId) {
+        try {
+            livroRepository.deleteById(livroId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DeleteMessageDTO(Constants.ERRO, e.getMessage()));
+        }
+
+        return ResponseEntity.ok(new DeleteMessageDTO(Constants.OK, Constants.OK));
     }
 }

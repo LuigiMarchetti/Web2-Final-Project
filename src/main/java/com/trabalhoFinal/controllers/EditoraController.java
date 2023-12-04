@@ -2,6 +2,7 @@ package com.trabalhoFinal.controllers;
 
 
 import com.trabalhoFinal.domain.Editora;
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
 import com.trabalhoFinal.services.EditoraServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,8 +51,7 @@ public class EditoraController {
     }
 
     @DeleteMapping("/{editoraId}")
-    public ResponseEntity<Void> deleteEditora(@PathVariable Long editoraId) {
-        editoraService.deleteEditora(editoraId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<DeleteMessageDTO> deleteEditora(@PathVariable Long editoraId) {
+        return editoraService.deleteEditora(editoraId);
     }
 }

@@ -20,7 +20,29 @@ public class Editora implements Serializable {
     @Column(name = "localizacao")
     private String localizacao;
 
+    @OneToOne(mappedBy = "editora")
+    private Livro editora;
+
     // Getters e Setters
+
+
+    public Editora() {
+    }
+
+    public Editora(Long editoraId, String nome, String localizacao, Livro editora) {
+        this.editoraId = editoraId;
+        this.nome = nome;
+        this.localizacao = localizacao;
+        this.editora = editora;
+    }
+
+    public Livro getEditora() {
+        return editora;
+    }
+
+    public void setEditora(Livro editora) {
+        this.editora = editora;
+    }
 
     public Long getEditoraId() {
         return editoraId;

@@ -1,6 +1,7 @@
 package com.trabalhoFinal.controllers;
 
 import com.trabalhoFinal.domain.Genero;
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
 import com.trabalhoFinal.services.GeneroServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,8 +51,7 @@ public class GeneroController {
     }
 
     @DeleteMapping("/{generoId}")
-    public ResponseEntity<Void> deleteGenero(@PathVariable Long generoId) {
-        generoService.deleteGenero(generoId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<DeleteMessageDTO> deleteGenero(@PathVariable Long generoId) {
+        return generoService.deleteGenero(generoId);
     }
 }

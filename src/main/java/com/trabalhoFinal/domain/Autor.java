@@ -2,14 +2,16 @@ package com.trabalhoFinal.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 @Entity
 @Table(name = "autor")
-public class Autor {
+public class Autor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +26,8 @@ public class Autor {
 
     @ManyToMany(mappedBy = "autores")
     @JsonIgnore
+    //@ApiModelProperty(notes = "List of books written by this author")
+    @Schema(description = "List of books written by this author", title = "Books list", name = "Books list")
     private List<Livro> livros;
 
     // Getters e Setters

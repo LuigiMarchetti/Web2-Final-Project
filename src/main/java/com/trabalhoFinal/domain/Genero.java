@@ -17,12 +17,28 @@ public class Genero implements Serializable  {
    // @Column(name = "nome")
     private String nome;
 
+    @OneToOne(mappedBy = "genero")
+    private Livro livro;
+
     
     // Getters e Setters
 
-    public Genero(Long generoId, String nome) {
+
+    public Genero() {
+    }
+
+    public Genero(Long generoId, String nome, Livro livro) {
         this.generoId = generoId;
         this.nome = nome;
+        this.livro = livro;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
     public Long getGeneroId() {

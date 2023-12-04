@@ -1,6 +1,10 @@
 package com.trabalhoFinal.services;
 
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
+import com.trabalhoFinal.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.trabalhoFinal.domain.Editora;
@@ -42,7 +46,13 @@ public class EditoraServices {
         }
     }
 
-    public void deleteEditora(Long editoraId) {
-        editoraRepository.deleteById(editoraId);
+    public ResponseEntity<DeleteMessageDTO> deleteEditora(Long editoraId) {
+        try {
+            editoraRepository.deleteById(editoraId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DeleteMessageDTO(Constants.ERRO, e.getMessage()));
+        }
+
+        return ResponseEntity.ok(new DeleteMessageDTO(Constants.OK, Constants.OK));
     }
 }

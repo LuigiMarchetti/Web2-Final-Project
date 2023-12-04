@@ -1,8 +1,12 @@
 package com.trabalhoFinal.services;
 
 import com.trabalhoFinal.domain.Autor;
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
 import com.trabalhoFinal.repository.AutorRepository;
+import com.trabalhoFinal.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +45,14 @@ public class AutorServices {
         }
     }
 
-    public void deleteAutor(Long autorId) {
-        autorRepository.deleteById(autorId);
+    public ResponseEntity deleteAutor(Long autorId) {
+        try {
+            autorRepository.deleteById(autorId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DeleteMessageDTO(Constants.ERRO, e.getMessage()));
+        }
+
+        return ResponseEntity.ok(new DeleteMessageDTO(Constants.OK, Constants.OK));
+
     }
 }

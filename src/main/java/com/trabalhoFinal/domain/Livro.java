@@ -49,7 +49,11 @@ public class Livro implements Serializable {
         this.autores = autores;
     }
 
-    // Getters e Setters
+    public Livro() {
+    }
+
+
+// Getters e Setters
 
     public Long getLivroId() {
         return livroId;

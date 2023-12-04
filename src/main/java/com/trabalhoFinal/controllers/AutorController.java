@@ -1,7 +1,9 @@
 package com.trabalhoFinal.controllers;
 
 import com.trabalhoFinal.domain.Autor;
+import com.trabalhoFinal.dtos.DeleteMessageDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,13 +34,14 @@ public class AutorController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Sucess",
+                            description = "Success",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = Autor.class, type = "array"))),
                     @ApiResponse(
-                            responseCode = "204",
-                            description = "No content")
+                            responseCode = "404",
+                            description = "No authors found",
+                            content = @Content(array = @ArraySchema)),
             }
     )
     @GetMapping
@@ -58,13 +61,14 @@ public class AutorController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Sucess",
+                            description = "Success",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = Autor.class, type = "Author"))),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Not found")
+                            description = "Author not found",
+                            content = @Content(array = @ArraySchema))
             }
     )
     @GetMapping("/{autorId}")
@@ -105,13 +109,14 @@ public class AutorController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Sucess",
+                            description = "Success",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = Autor.class, type = "Author"))),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Not found")
+                            description = "Author not found",
+                            content = @Content(array = @ArraySchema))
             }
     )
     @PutMapping("/{autorId}")
@@ -131,13 +136,23 @@ public class AutorController {
             method = "DELETE",
             responses = {
                     @ApiResponse(
-                            responseCode = "204",
-                            description = "No content")
+                            responseCode = "200",
+                            description = "Author deleted",
+                            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = DeleteMessageDTO.class))),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Error found",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = DeleteMessageDTO.class)))
+
+
             }
     )
     @DeleteMapping("/{autorId}")
-    public ResponseEntity<Void> deleteAutor(@PathVariable Long autorId) {
-        autorService.deleteAutor(autorId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<DeleteMessageDTO> deleteAutor(@PathVariable Long autorId) {
+        return autorService.deleteAutor(autorId);
     }
 }
